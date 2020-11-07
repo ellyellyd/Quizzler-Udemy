@@ -40,50 +40,32 @@ or     */
                     Question(q: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", a: "True")
 
     ]
- */
- //   var     questionNumber = 0
-    
+ */    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         updateUI()
-        //progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
     }
 
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         
         let userAnswer = sender.currentTitle!
-        // or (1)
-        //let actualQuestion = quiz[questionNumber]
-        //(2)
-        //let actualAnswer = quiz[questionNumber].answer
         let userGotItRight = quizBrain.checkAnswer(userAnswer)
-        //or (1)
-        //let actualAnswer = actualQuestion.answer
-        
-        //if userAnswer == actualAnswer{
+
         if userGotItRight{
             sender.backgroundColor = UIColor.green
         }else{
             sender.backgroundColor = UIColor.red
         }
-      /*
-        if questionNumber < quiz.count - 1{ // or questionNumber < quiz.count
-            questionNumber += 1
-        }else{
-            questionNumber = 0
-        }
- */
+  
         quizBrain.nextQuestion()
         Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
     }
     
     @objc func updateUI(){
-        //questionLable.text = quiz[questionNumber].text
         questionLable.text = quizBrain.getQuestionText()
         trueButton.backgroundColor = UIColor.clear
         falseButton.backgroundColor = UIColor.clear
-        //progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
         progressBar.progress = quizBrain.getProgress()
         scoreLable.text = "Score: \(quizBrain.getScore())"
     }
